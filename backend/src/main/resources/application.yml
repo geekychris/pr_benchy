@@ -1,0 +1,57 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/prbotbenchmark}
+    username: ${DB_USER:prbotbenchmark}
+    password: ${DB_PASSWORD:prbotbenchmark}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+server:
+  port: ${PORT:8080}
+
+app:
+  github:
+    app-id: ${GITHUB_APP_ID:}
+    private-key-path: ${GITHUB_APP_PRIVATE_KEY_PATH:}
+    # Comma-separated list of installation IDs, or single value
+    installation-id: ${GITHUB_APP_INSTALLATION_ID:}
+    # Default org for mirror repos
+    default-mirror-org: ${GITHUB_MIRROR_ORG:}
+    api-url: https://api.github.com
+    poll-interval-seconds: 30
+    default-bot-timeout-seconds: 600
+
+  workspace:
+    base-path: ${WORKSPACE_BASE_PATH:${user.home}/.pr-bot-benchmark/workspaces}
+
+  run:
+    default-concurrency: 2
+    max-concurrency: 10
+
+  similarity:
+    default-strategies: FILE_LINE,NORMALIZED_TEXT,WINNOWING
+    winnowing-k: 5        # k-gram size
+    winnowing-w: 4        # window size
+    text-similarity-threshold: 0.8
+
+  llm:
+    enabled: ${LLM_ENABLED:false}
+    base-url: ${LLM_BASE_URL:http://localhost:11434}
+    model: ${LLM_MODEL:llama3.2}
+    similarity-threshold: 0.85
+
+logging:
+  level:
+    com.prbotbenchmark: DEBUG
+    org.springframework.web: INFO
