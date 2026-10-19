@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.png" alt="PR Benchy logo" width="180">
+</p>
+
 # PR Bot Benchmark
 
 A tool for evaluating and comparing AI-powered PR review bots. Replays historical GitHub PRs against configured bots, collects their reviews, supports human grading, and tracks performance over time against a golden dataset.
